@@ -40,6 +40,4 @@ export class LayoutComponent implements OnInit {
     isVerticalLayoutRequested() {
         return this.layoutType === LAYOUT_VERTICAL;
     }
-
-
 }
