@@ -15,8 +15,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 
 
-
-
 @NgModule({
   declarations: [
     LayoutComponent,

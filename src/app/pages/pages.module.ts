@@ -24,9 +24,12 @@ import lottie from 'lottie-web';
 import { PagesRoutingModule } from "./pages-routing.module";
 import { SharedModule } from "../shared/shared.module";
 import { WidgetModule } from '../shared/widget/widget.module';
-import { DashboardComponent } from './dashboards/dashboard/dashboard.component';
-import { ToastsContainer } from './dashboards/dashboard/toasts-container.component';
-import { DashboardsModule } from "./dashboards/dashboards.module";
+import { AccueilComponent } from './accueil/accueil.component';
+import { GeneralComponent } from './parametres/general/general.component';
+import { VillesLivraisonComponent } from './parametres/villes-livraison/villes-livraison.component';
+import { VillesRamassageComponent } from './parametres/villes-ramassage/villes-ramassage.component';
+import { ZonesComponent } from './parametres/zones/zones.component';
+import { TarifsComponent } from './parametres/tarifs/tarifs.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -36,8 +39,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    ToastsContainer
+    AccueilComponent,
+    GeneralComponent,
+    VillesLivraisonComponent,
+    VillesRamassageComponent,
+    ZonesComponent,
+    TarifsComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +60,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     WidgetModule,
     SwiperModule,
     LightboxModule,
-    DashboardsModule,
   ],
   providers: [
     {

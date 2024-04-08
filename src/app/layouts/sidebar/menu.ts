@@ -18,31 +18,31 @@ export const MENU: MenuItem[] = [
   {
     id: 3,
     label: 'Colis',
-    icon: 'ri-inbox-line', // Icône pour les colis
+    icon: 'ri-inbox-line',
     link: '/colis'
   },
   {
     id: 4,
     label: 'Bons de livraison',
-    icon: 'ri-file-list-3-line', // Icône pour les bons de livraison
+    icon: 'ri-file-list-3-line',
     link: '/bons-livraison'
   },
   {
     id: 5,
     label: 'Bons d\'envoi',
-    icon: 'ri-send-plane-line', // Icône pour les bons d'envoi
+    icon: 'ri-send-plane-line',
     link: '/bons-envoi'
   },
   {
     id: 6,
     label: 'Bons de distribution',
-    icon: 'ri-share-forward-line', // Icône pour les bons de distribution
+    icon: 'ri-share-forward-line',
     link: '/bons-distribution'
   },
   {
     id: 7,
     label: 'Demandes de ramassage',
-    icon: 'ri-truck-line', // Icône pour les demandes de ramassage
+    icon: 'ri-truck-line',
     link: '/demandes-ramassage'
   },
 
@@ -55,19 +55,19 @@ export const MENU: MenuItem[] = [
   {
     id: 9,
     label: 'Bons de paiement',
-    icon: 'ri-wallet-3-line', // Icône pour les bons de paiement
+    icon: 'ri-wallet-3-line',
     link: '/bons-paiement'
   },
   {
     id: 10,
     label: 'Bons de retour',
-    icon: 'ri-refresh-line', // Icône pour les bons de retour
+    icon: 'ri-refresh-line',
     link: '/bons-retour'
   },
   {
     id: 11,
     label: 'Factures',
-    icon: 'ri-file-text-line', // Icône pour les factures
+    icon: 'ri-file-text-line',
     link: '/factures'
   },
 
@@ -92,7 +92,7 @@ export const MENU: MenuItem[] = [
   {
     id: 15,
     label: 'Nouveau client',
-    icon: 'ri-user-add-line', // Icône pour ajouter un nouveau client
+    icon: 'ri-user-add-line',
     link: '/nouveau-client'
   },
 
@@ -105,13 +105,13 @@ export const MENU: MenuItem[] = [
   {
     id: 17,
     label: 'Utilisateurs',
-    icon: 'ri-team-line', // Icône pour la gestion des utilisateurs
+    icon: 'ri-team-line',
     link: '/utilisateurs'
   },
   {
     id: 18,
     label: 'Nouveau livreur',
-    icon: 'ri-user-add-line', // Icône pour ajouter un nouveau livreur
+    icon: 'ri-user-add-line',
     link: '/nouveau-livreur'
   },
 
