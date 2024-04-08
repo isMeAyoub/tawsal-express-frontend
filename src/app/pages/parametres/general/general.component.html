@@ -1,21 +1,58 @@
 <!-- Start Breadcrumbs -->
 <app-breadcrumbs title="Général"
                  [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
-<!-- End Breadcrumbs -->
+
 <!-- Start Content -->
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>
-                    Général
-                </h4>
+<div class="card">
+    <div class="card-header">
+        <h4>
+            <i class="bi bi-building"></i>
+            Informations Générales De l'entreprise
+        </h4>
+    </div>
+    <div class="card-body">
+        <form action="">
+            <div class="mb-3">
+                <label for="nomEntreprise" class="form-label">Nom Entreprise</label>
+                <input type="text" class="form-control" id="nomEntreprise" placeholder="Entrer le nom de l'entreprise">
             </div>
-            <div class="card-body">
-                <p>
-                    Bienvenue sur la page de gestion des paramètres généraux de l'application.
-                </p>
+            <div class="mb-3">
+                <label for="webSite" class="form-label">webSite</label>
+                <input type="text" class="form-control" id="webSite" placeholder="Entrer le site web de l'entreprise">
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="adresseEntreprise" class="form-label">
+                    Adresse De l'entreprise
+                </label>
+                <input type="text" class="form-control" id="adresseEntreprise"
+                       placeholder="Entrer l'adresse de l'entreprise">
+            </div>
+            <div class="mb-3">
+                <label for="telephoneEntreprise" class="form-label">
+                    Téléphone De l'entreprise
+                </label>
+                <input type="text" class="form-control" id="telephoneEntreprise"
+                       placeholder="Entrer le téléphone de l'entreprise">
+            </div>
+            <div class="mb-3">
+                <label for="emailEntreprise" class="form-label ">
+                    Email De l'entreprise
+                </label>
+                <input type="email" class="form-control" id="emailEntreprise"
+                       placeholder="Entrer l'email de l'entreprise">
+            </div>
+            <div class="mb-3">
+                <label for="monnaieApplication" class="form-label">
+                    Monnaie Application
+                </label>
+                <input type="text" class="form-control" id="monnaieApplication"
+                       placeholder="Entrer la monnaie de l'application">
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">
+                    Modifier
+                </button>
+            </div>
+        </form>
     </div>
 </div>
