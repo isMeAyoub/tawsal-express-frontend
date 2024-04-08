@@ -14,9 +14,6 @@ import {LayoutsModule} from "./layouts/layouts.module";
 import {PagesModule} from "./pages/pages.module";
 import {AppComponent} from './app.component';
 
-import {FakeBackendInterceptor} from './core/helpers/fake-backend';
-import {ErrorInterceptor} from './core/helpers/error.interceptor';
-import {JwtInterceptor} from './core/helpers/jwt.interceptor';
 import {environment} from '../environments/environment';
 
 
@@ -28,11 +25,7 @@ export function createTranslateLoader(http: HttpClient): any {
     );
 }
 
-if (environment.defaultauth === 'firebase') {
-    initFirebaseBackend(environment.firebaseConfig);
-} else {
-    FakeBackendInterceptor;
-}
+
 
 @NgModule({
     declarations: [
@@ -60,20 +53,7 @@ if (environment.defaultauth === 'firebase') {
         PagesModule
     ],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: JwtInterceptor, multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ErrorInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: FakeBackendInterceptor,
-            multi: true
-        },
+
     ],
     bootstrap: [AppComponent]
 })

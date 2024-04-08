@@ -27,28 +27,31 @@ export class GeneralComponent implements OnInit {
             webSite: ['', Validators.required],
             adresseEntreprise: ['', Validators.required],
             telephoneEntreprise: ['', Validators.required],
-            emailEntreprise: ['', Validators.required],
+            emailEntreprise: ['', [Validators.required, Validators.email]],
             monnaieApplication: ['', Validators.required]
         });
 
-        this.generalService.getGeneral().subscribe(
-            (data) => {
-                // ... handle successful data
-                this.generalData = data;
-                this.generalForm.patchValue({
-                    nomEntreprise: this.generalData.nomEntreprise,
-                    webSite: this.generalData.webSite,
-                    adresseEntreprise: this.generalData.adresseEntreprise,
-                    telephoneEntreprise: this.generalData.telephoneEntreprise,
-                    emailEntreprise: this.generalData.emailEntreprise,
-                    monnaieApplication: this.generalData.monnaieApplication
-                });
-                console.log('General data:', this.generalData);
-            },
-            (error) => {
-                console.error('Error fetching general data:', error);
-                // ... handle the error (e.g., display an error message)
-            }
-        );
+        this.generalService.getGeneral().subscribe(data => {
+            this.generalData = data;
+            this.generalForm.patchValue(this.generalData);
+            console.log(this.generalData);
+        });
+    }
+
+    // TODO: Implement updateGeneralData method
+    updateGeneralData() {
+        if (this.generalForm.valid) {
+
+            this.generalService.updateGeneral(this.generalForm.value)
+                .subscribe(
+                    data => {
+                        this.generalData = data;
+                        console.log("General data updated successfully", this.generalData);
+                    },
+                    error => {
+                        console.log('Error', error);
+                    }
+                );
+        }
     }
 }

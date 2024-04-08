@@ -3,6 +3,51 @@
                  [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <!-- Start Content -->
+<div class="row">
+    <!-- Card to display the logo of the company -->
+    <div class="col-md-6">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>
+                    <i class="bi bi-image"></i>
+                    Logo
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <img [src]= "generalData?.logo" alt="Logo Entreprise" class="img-fluid">
+                </div>
+                <div class="text-end mt-3">
+                    <button class="btn btn-primary">
+                        Mettre à jour
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Card to display the favicon of the company -->
+    <div class="col-md-6">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>
+                    <i class="bi bi-image"></i>
+                    Favicon
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <img [src]= "generalData?.favicon" alt="Favicon Entreprise" class="img-fluid">
+                </div>
+                <div class="text-end mt-3">
+                    <button class="btn btn-primary">
+                        Mettre à jour
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card">
     <div class="card-header">
         <h4>
@@ -11,20 +56,25 @@
         </h4>
     </div>
     <div class="card-body">
-        <form action="">
+        <form [formGroup]="generalForm" (submit)="updateGeneralData()" class="row g-3 needs-validation" novalidate>
             <div class="mb-3">
                 <label for="nomEntreprise" class="form-label">Nom Entreprise</label>
-                <input type="text" class="form-control" id="nomEntreprise" placeholder="Entrer le nom de l'entreprise">
+                <input type="text" class="form-control" id="nomEntreprise" formControlName="nomEntreprise"
+                       placeholder="Entrer le nom de l'entreprise" required>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please provide your first name.</div>
             </div>
             <div class="mb-3">
                 <label for="webSite" class="form-label">webSite</label>
-                <input type="text" class="form-control" id="webSite" placeholder="Entrer le site web de l'entreprise">
+                <input type="text" class="form-control" id="webSite" formControlName="webSite"
+                       placeholder="Entrer le site web de l'entreprise">
             </div>
             <div class="mb-3">
                 <label for="adresseEntreprise" class="form-label">
                     Adresse De l'entreprise
                 </label>
                 <input type="text" class="form-control" id="adresseEntreprise"
+                       formControlName="adresseEntreprise"
                        placeholder="Entrer l'adresse de l'entreprise">
             </div>
             <div class="mb-3">
@@ -32,6 +82,7 @@
                     Téléphone De l'entreprise
                 </label>
                 <input type="text" class="form-control" id="telephoneEntreprise"
+                       formControlName="telephoneEntreprise"
                        placeholder="Entrer le téléphone de l'entreprise">
             </div>
             <div class="mb-3">
@@ -39,6 +90,7 @@
                     Email De l'entreprise
                 </label>
                 <input type="email" class="form-control" id="emailEntreprise"
+                       formControlName="emailEntreprise"
                        placeholder="Entrer l'email de l'entreprise">
             </div>
             <div class="mb-3">
@@ -46,13 +98,15 @@
                     Monnaie Application
                 </label>
                 <input type="text" class="form-control" id="monnaieApplication"
+                       formControlName="monnaieApplication"
                        placeholder="Entrer la monnaie de l'application">
             </div>
             <div class="text-end">
                 <button type="submit" class="btn btn-primary">
-                    Modifier
+                    Mettre à jour
                 </button>
             </div>
         </form>
     </div>
 </div>
+
