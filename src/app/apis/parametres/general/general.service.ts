@@ -9,7 +9,7 @@ import {environment} from "../../../../environments/environment.dev" ;
 })
 export class GeneralService {
 
-    private baseUrl = environment.baseUrl + 'api/v1/parametre/general';
+    private baseUrl = environment.apiUrl + 'api/v1/parametre/general';
 
     constructor(private http: HttpClient) {
     }
@@ -34,5 +34,21 @@ export class GeneralService {
      * Upload logo
      * @param file File
      */
+    uploadLogo(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('logo', file);
 
+        return this.http.patch(`${this.baseUrl}/logo`, formData);
+    }
+
+    /**
+     * Upload favicon
+     * @param file File
+     */
+    uploadFavicon(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('favicon', file);
+
+        return this.http.patch(`${this.baseUrl}/favicon`, formData);
+    }
 }

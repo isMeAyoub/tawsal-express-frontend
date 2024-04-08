@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgbToastModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CountToModule } from 'angular-count-to';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -31,7 +30,7 @@ import { VillesLivraisonComponent } from './parametres/villes-livraison/villes-l
 import { VillesRamassageComponent } from './parametres/villes-ramassage/villes-ramassage.component';
 import { ZonesComponent } from './parametres/zones/zones.component';
 import { TarifsComponent } from './parametres/tarifs/tarifs.component';
-
+import {ToastsContainer} from "../shared/toast/toasts-container.component";
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -45,7 +44,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     VillesLivraisonComponent,
     VillesRamassageComponent,
     ZonesComponent,
-    TarifsComponent
+    TarifsComponent,
+    ToastsContainer
   ],
   imports: [
     CommonModule,
