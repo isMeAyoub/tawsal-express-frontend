@@ -1,3 +1,6 @@
+/**
+ *  This is the model class for General
+ */
 export interface General{
     generalId: number;
     logo: string;

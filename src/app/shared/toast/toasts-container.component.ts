@@ -23,6 +23,9 @@ import {ToastService} from './toast-service';
         '[class.ngb-toasts]': 'true',
         '[style.top]': "'70px'",
         '[style.right]': "'10px'",
+        '[style.position]': "'fixed'",
+        '[style.z-index]': "'1060'",
+        '[style.text-align]': "'center'",
     },
 })
 export class ToastsContainer {
