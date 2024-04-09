@@ -8,27 +8,23 @@
                     Liste des villes de ramassage
                 </h4>
             </div>
-            <!-- end card header -->
 
+            <!-- end card header -->
             <div class="card-body">
                 <div id="customerList">
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div>
-                                <!-- (click)="openModal(content)" -->
                                 <button type="button" class="btn btn-success add-btn" (click)="openModal()">
                                     <i class="ri-add-line align-bottom"></i> Ajouter
                                 </button>
-                                <button style="margin-left: 10px" class="btn btn-soft-danger"
-                                        onClick="deleteMultiple()"><i
-                                        class="ri-delete-bin-2-line"></i></button>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="d-flex justify-content-sm-end">
                                 <div class="search-box ms-2">
-                                    <!-- [(ngModel)]="service.searchTerm" -->
-                                    <input type="text" class="form-control search" placeholder="Search...">
+                                    <input type="text" class="form-control search" placeholder="Rechercher..."
+                                           (keyup)="searchVilleRamassage($any($event).target.value)">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
@@ -39,12 +35,8 @@
                         <table class="table">
                             <thead>
                             <tr class="bg-light text-muted">
-                                <th scope="col" style="width: 50px;">
-                                    <div class="form-check">
-                                        <!-- [(ngModel)]="masterSelected" (change)="checkUncheckAll()" -->
-                                        <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                    </div>
-                                </th>
+                                <th></th>
+                                <th></th>
                                 <th>Reference</th>
                                 <th>Nom Ville</th>
                                 <th>Status</th>
@@ -53,11 +45,8 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let ville of villesRamassageData">
-                                <th scope="row">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="checkAll" value="option1">
-                                    </div>
-                                </th>
+                                <td></td>
+                                <td></td>
                                 <td>{{ ville.reference }}</td>
                                 <td>{{ ville.nomVille }}</td>
 
@@ -71,13 +60,15 @@
                                     <div class="d-flex gap-2">
                                         <div class="edit">
                                             <button class="btn btn-sm btn-success edit-item-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(ville)">
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    (click)="openModal(ville)">
                                                 Modifier
                                             </button>
                                         </div>
                                         <div class="remove">
                                             <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteRecordModal" (click)="confirm(ville.villeId)">
+                                                    data-bs-target="#deleteRecordModal"
+                                                    (click)="confirm(ville.villeId)">
                                                 Supprimer
                                             </button>
                                         </div>
@@ -92,34 +83,35 @@
                     <div class="row justify-content-md-between align-items-md-center">
                         <div class="col col-sm-6">
                             <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                                Showing
-                                <!--                                {{service.startIndex}} to-->
-                                <!--                                {{service.endIndex}} of {{service.totalRecords}}-->
-                                entries
+                                <div class="d-flex align-items-center">
+                                    <span class="page-data">Affichage de {{ villesRamassageData.length }}
+                                        sur {{ totalItems }}</span>
+                                </div>
                             </div>
                         </div>
                         <!-- Pagination -->
-                        <div class="col col-sm-6">
-                            <div class="text-sm-right float-sm-end listjs-pagination">
-                                <!--                                <ngb-pagination-->
-                                <!--                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">-->
-                                <!--                                </ngb-pagination>-->
-                            </div>
+                        <div class="text-sm-right float-sm-end listjs-pagination">
+                            <ngb-pagination
+                                    [collectionSize]="totalItems"
+                                    [pageSize]="itemsPerPage"
+                                    [(page)]="currentPage"
+                                    [maxSize]="5"
+                                    [rotate]="true"
+                                    (pageChange)="getVillesRamassage(searchTerm)">
+                            </ngb-pagination>
                         </div>
-                        <!-- End Pagination -->
                     </div>
                 </div>
-            </div><!-- end card -->
+            </div>
         </div>
-        <!-- end col -->
     </div>
-    <!-- end col -->
 </div>
+
 <!-- Modal -->
 <ng-template #content role="document" let-modal>
     <div class="modal-header bg-light p-3">
         <h5 class="modal-title" id="exampleModalLabel">
-            Ajouter une ville de ramassage
+            {{ villesRamassageForm.get('id')?.value ? 'Modifier' : 'Ajouter' }} Ville de ramassage
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
                 (click)="modal.dismiss('Cross click')"></button>
@@ -161,7 +153,7 @@
                     Fermer
                 </button>
                 <button type="submit" class="btn btn-success" id="add-btn">
-                    Ajouter
+                    {{ villesRamassageForm.get('id')?.value ? 'Modifier' : 'Ajouter' }}
                 </button>
             </div>
         </div>

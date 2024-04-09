@@ -16,6 +16,12 @@ export class VillesRamassageComponent implements OnInit {
     villesRamassageData!: VilleRamassage[];
     villesRamassageForm!: FormGroup;
     submitted: boolean = false;
+    currentPage: number = 1;
+    totalPages: number = 0;
+    itemsPerPage: number = 10;
+    totalItems: number = 0;
+    searchTerm: string = '';
+
 
     @ViewChild('content') content: any;
 
@@ -51,24 +57,33 @@ export class VillesRamassageComponent implements OnInit {
     /**
      * Get all villes de ramassage from API
      */
-    getVillesRamassage() {
-        this.villesRamassageService.getVillesRamassage().subscribe((response) => {
-            this.villesRamassageData = response.content;
-            console.log(this.villesRamassageData);
+    getVillesRamassage(searchTerm?: string) {
+        this.villesRamassageService.getVillesRamassage(this.currentPage, this.itemsPerPage, searchTerm).subscribe(data => {
+            this.villesRamassageData = data.content;
+            this.totalItems = data.totalElements;
+            this.totalPages = data.totalPages;
         });
     }
 
+
+
+    /**
+     * Open modal to add or update ville de ramassage
+     */
     openModal(villeRamassage?: VilleRamassage) {
         this.resetForm();
         if (villeRamassage) {
             this.villesRamassageForm.patchValue({
                 ...villeRamassage,
-                id: villeRamassage.villeId // assuming the id is stored in the villeId field
+                id: villeRamassage.villeId
             });
         }
         this.modalService.open(this.content, {size: 'md', centered: true});
     }
 
+    /**
+     * Reset form values
+     */
     resetForm() {
         this.villesRamassageForm.reset();
         this.submitted = false;
@@ -86,14 +101,27 @@ export class VillesRamassageComponent implements OnInit {
             this.updateVilleRamassage(formValue, formValue.id);
         } else {
             // Create new ville de ramassage
-            this.villesRamassageService.createVilleRamassage(formValue).subscribe((response) => {
-                this.ShowSuccessAdd();
-                this.modalService.dismissAll();
-                this.getVillesRamassage();
-            });
+            this.createVilleRamassage(formValue);
         }
     }
 
+    /**
+     * Create a ville de ramassage
+     * @param villeRamassage
+     */
+    createVilleRamassage(villeRamassage: VilleRamassage) {
+        this.villesRamassageService.createVilleRamassage(villeRamassage).subscribe(() => {
+            this.ShowSuccessAdd();
+            this.modalService.dismissAll();
+            this.getVillesRamassage();
+        });
+    }
+
+    /**
+     * Update a ville de ramassage
+     * @param villeRamassage
+     * @param id
+     */
     updateVilleRamassage(villeRamassage: VilleRamassage, id: number) {
         this.villesRamassageService.updateVilleRamassage(villeRamassage, id).subscribe(() => {
             this.ShowSuccessUpdate();
@@ -117,6 +145,7 @@ export class VillesRamassageComponent implements OnInit {
             cancelButtonText: 'Annuler'
         }).then(result => {
             if (result.value) {
+                Swal.fire('Supprimé!', 'La ville de ramassage a été supprimée.', 'success');
                 this.deleteVilleRamassage(id);
             }
         });
@@ -148,4 +177,17 @@ export class VillesRamassageComponent implements OnInit {
             {classname: 'bg-success text-center text-light', delay: 3000});
     }
 
+    /**
+     * Search ville de ramassage
+     * @param searchTerm
+     */
+    searchVilleRamassage(searchTerm: string) {
+        this.searchTerm = searchTerm;
+        this.getVillesRamassage(this.searchTerm);
+    }
+
+
+    changeItemsPerPage() {
+
+    }
 }
