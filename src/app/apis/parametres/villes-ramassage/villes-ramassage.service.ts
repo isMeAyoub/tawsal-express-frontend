@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from "../../../../environments/environment.dev" ;
 import {VilleRamassage} from "../../../types/parametres/villeRamassage";
-import {VilleRamassageResponse} from "../../../types/parametres/VilleRamassageResponse";
 
 
 @Injectable({
@@ -15,8 +14,7 @@ export class VillesRamassageService {
 
     constructor(
         private http: HttpClient
-    ) {
-    }
+    ) {}
 
     /**
      * Get all villes ramassage
@@ -25,8 +23,8 @@ export class VillesRamassageService {
      * @param size number
      * @param search string
      */
-    getVillesRamassage(page: number, size: number , search: string = ''): Observable<VilleRamassageResponse> {
-        return this.http.get<VilleRamassageResponse>(`${this.baseUrl}?page=${page}&size=${size}&search=${search}`);
+    getVillesRamassage(page: number, size: number , search: string = ''): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}?page=${page}&size=${size}&search=${search}`);
     }
 
     /**

@@ -67,7 +67,6 @@ export class VillesRamassageComponent implements OnInit {
         });
     }
 
-
     /**
      * Search ville de ramassage
      * @param searchTerm
@@ -116,6 +115,7 @@ export class VillesRamassageComponent implements OnInit {
             // Create new ville de ramassage
             this.createVilleRamassage(formValue);
         }
+        this.getVillesRamassage();
     }
 
     /**
@@ -126,7 +126,6 @@ export class VillesRamassageComponent implements OnInit {
         this.villesRamassageService.createVilleRamassage(villeRamassage).subscribe(() => {
             this.ShowSuccessAdd();
             this.modalService.dismissAll();
-            this.getVillesRamassage();
         });
     }
 
@@ -139,7 +138,6 @@ export class VillesRamassageComponent implements OnInit {
         this.villesRamassageService.updateVilleRamassage(villeRamassage, id).subscribe(() => {
             this.ShowSuccessUpdate();
             this.modalService.dismissAll();
-            this.getVillesRamassage();
         });
     }
 
@@ -174,6 +172,10 @@ export class VillesRamassageComponent implements OnInit {
         });
     }
 
+    /**
+     * Change status of ville de ramassage
+     * @param villeId
+     */
     changeStatus(villeId: number) {
         this.villesRamassageService.changeStatusOfVilleRamassage(villeId).subscribe(() => {
             this.getVillesRamassage();
@@ -195,6 +197,4 @@ export class VillesRamassageComponent implements OnInit {
         this.toastService.show('La Mis à jour a été effectuée avec succès !',
             {classname: 'bg-success text-center text-light', delay: 3000});
     }
-
-
 }
