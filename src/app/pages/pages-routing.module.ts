@@ -27,7 +27,7 @@ const routes: Routes = [
         component: VillesRamassageComponent
     },
     {
-        path: "parametres/zones",
+        path: "parametres/regions",
         component: ZonesComponent
     },
     {

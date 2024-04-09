@@ -85,7 +85,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <div class="row justify-content-md-between align-items-md-center">
 
                         <div class="col col-sm-6">
@@ -98,8 +97,6 @@
                         </div>
                         <!-- Pagination -->
                         <div class="col col-sm-6">
-
-                            <!-- Pagination -->
                             <div class="text-sm-right float-sm-end listjs-pagination">
                                 <ngb-pagination
                                         [collectionSize]="totalItems"
@@ -127,7 +124,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
                 (click)="modal.dismiss('Cross click')"></button>
     </div>
-    <form (ngSubmit)="saveVilleRamassage()" [formGroup]="villesRamassageForm">
+    <form (ngSubmit)="saveVilleRamassage()" [formGroup]="villesRamassageForm" autocomplete="off">
         <div class="modal-body">
             <div class="mb-3">
                 <label for="reference-field" class="form-label">

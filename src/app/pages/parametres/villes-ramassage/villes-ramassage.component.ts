@@ -115,7 +115,6 @@ export class VillesRamassageComponent implements OnInit {
             // Create new ville de ramassage
             this.createVilleRamassage(formValue);
         }
-        this.getVillesRamassage();
     }
 
     /**
@@ -126,6 +125,7 @@ export class VillesRamassageComponent implements OnInit {
         this.villesRamassageService.createVilleRamassage(villeRamassage).subscribe(() => {
             this.ShowSuccessAdd();
             this.modalService.dismissAll();
+            this.getVillesRamassage();
         });
     }
 
@@ -138,6 +138,7 @@ export class VillesRamassageComponent implements OnInit {
         this.villesRamassageService.updateVilleRamassage(villeRamassage, id).subscribe(() => {
             this.ShowSuccessUpdate();
             this.modalService.dismissAll();
+            this.getVillesRamassage();
         });
     }
 

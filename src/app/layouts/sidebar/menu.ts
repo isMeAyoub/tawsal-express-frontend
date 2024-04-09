@@ -141,8 +141,8 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 23,
-        label: 'Zones',
-        link: '/parametres/zones',
+        label: 'Régions',
+        link: '/parametres/regions',
         parentId: 19
       },
       {

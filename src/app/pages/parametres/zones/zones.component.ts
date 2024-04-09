@@ -22,7 +22,6 @@ export class ZonesComponent implements OnInit {
     totalItems: number = 0;
     searchTerm: string = '';
 
-    // TODO: add this -> @ViewChild('content') content: any;
     @ViewChild('content') content: any;
 
     constructor(
@@ -36,7 +35,7 @@ export class ZonesComponent implements OnInit {
     ngOnInit(): void {
         this.breadCrumbItems = [
             {label: 'Paramètres'},
-            {label: 'Zones', active: true}
+            {label: 'Régions', active: true}
         ];
 
         this.initializeForm();
@@ -50,7 +49,6 @@ export class ZonesComponent implements OnInit {
         this.zonesForm = this.formBuilder.group({
             id: [''],
             nomZone: ['', Validators.required],
-            reference: ['', Validators.required]
         });
 
     }
@@ -59,13 +57,11 @@ export class ZonesComponent implements OnInit {
      * Get all zones from API
      */
     getZones(searchTerm?: string) {
-        this.zonesService.getZones(this.currentPage, this.itemsPerPage, searchTerm).subscribe(response => {
+        const backendPage = this.currentPage - 1;
+        this.zonesService.getZones(backendPage, this.itemsPerPage, searchTerm).subscribe(response => {
             this.zonesData = response.content;
-            this.totalItems = response.total;
+            this.totalItems = response.totalElements;
             this.totalPages = response.totalPages;
-
-            // TODO: check if this is the correct
-            console.log(this.zonesData.length);
         });
     }
 
@@ -116,21 +112,30 @@ export class ZonesComponent implements OnInit {
             // Add new zone
             this.addZone(zone);
         }
-        this.getZones();
     }
 
+    /**
+     * Update a zone by id
+     * @param zone
+     * @param id
+     */
     private updateZone(zone: Zone, id: number) {
         this.zonesService.updateZone(zone, id).subscribe(response => {
             this.ShowSecussUpdate();
             this.modalService.dismissAll();
+            this.getZones();
         });
     }
 
-
+    /**
+     * Add a new zone
+     * @param zone
+     */
     private addZone(zone: Zone) {
         this.zonesService.createZone(zone).subscribe(response => {
             this.ShowSuccessAdd();
             this.modalService.dismissAll();
+            this.getZones();
         });
     }
 
@@ -140,8 +145,8 @@ export class ZonesComponent implements OnInit {
      */
     confirmDeleteZone(id: number) {
         Swal.fire({
-            title: 'Supprimer Zone',
-            text: 'Êtes-vous sûr de vouloir supprimer cette zone?',
+            title: 'Supprimer La Région',
+            text: 'Êtes-vous sûr de vouloir supprimer cette région?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',
@@ -149,7 +154,7 @@ export class ZonesComponent implements OnInit {
             cancelButtonText: 'Non, annuler'
         }).then((result) => {
             if (result.value) {
-                Swal.fire('Supprimé!', 'La zone a été supprimée.', 'success');
+                Swal.fire('Supprimé!', 'La région a été supprimée.', 'success');
                 this.deleteZone(id);
             }
         });
@@ -175,12 +180,18 @@ export class ZonesComponent implements OnInit {
         });
     }
 
+    /**
+     * Show success message when a zone is updated
+     */
     private ShowSecussUpdate() {
-        this.toastService.show('Zone modifiée avec succès', {classname: 'bg-success text-light', delay: 5000});
+        this.toastService.show('Région modifiée avec succès', {classname: 'bg-success text-light', delay: 5000});
     }
 
+    /**
+     * Show success message when a zone is added
+     */
     private ShowSuccessAdd() {
-        this.toastService.show('Zone ajoutée avec succès', {classname: 'bg-success text-light', delay: 5000});
+        this.toastService.show('Région créée avec succès', {classname: 'bg-success text-light', delay: 5000});
     }
 }
 
