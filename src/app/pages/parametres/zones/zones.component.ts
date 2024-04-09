@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./zones.component.scss']
 })
 export class ZonesComponent implements OnInit {
+  breadCrumbItems!: Array<{}>;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.breadCrumbItems = [
+      { label: 'Paramètres' },
+      { label: 'Zones', active: true }
+    ];
   }
 
 }

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class VillesRamassageComponent implements OnInit {
     breadCrumbItems!: Array<{}>;
-    villesRamassageData!: VilleRamassage[];
+    villesRamassageData: VilleRamassage[] = [];
     villesRamassageForm!: FormGroup;
     submitted: boolean = false;
     currentPage: number = 1;
@@ -58,7 +58,9 @@ export class VillesRamassageComponent implements OnInit {
      * Get all villes de ramassage from API
      */
     getVillesRamassage(searchTerm?: string) {
-        this.villesRamassageService.getVillesRamassage(this.currentPage, this.itemsPerPage, searchTerm).subscribe(data => {
+        // Adjust the currentPage to be 0-based for the backend request
+        const backendPage = this.currentPage - 1;
+        this.villesRamassageService.getVillesRamassage(backendPage, this.itemsPerPage, searchTerm).subscribe(data => {
             this.villesRamassageData = data.content;
             this.totalItems = data.totalElements;
             this.totalPages = data.totalPages;
@@ -66,6 +68,14 @@ export class VillesRamassageComponent implements OnInit {
     }
 
 
+    /**
+     * Search ville de ramassage
+     * @param searchTerm
+     */
+    searchVilleRamassage(searchTerm: string) {
+        this.searchTerm = searchTerm;
+        this.getVillesRamassage(this.searchTerm);
+    }
 
     /**
      * Open modal to add or update ville de ramassage
@@ -89,6 +99,9 @@ export class VillesRamassageComponent implements OnInit {
         this.submitted = false;
     }
 
+    /**
+     * Form data To Save or Update
+     */
     saveVilleRamassage() {
         this.submitted = true;
         if (this.villesRamassageForm.invalid) {
@@ -161,6 +174,12 @@ export class VillesRamassageComponent implements OnInit {
         });
     }
 
+    changeStatus(villeId: number) {
+        this.villesRamassageService.changeStatusOfVilleRamassage(villeId).subscribe(() => {
+            this.getVillesRamassage();
+        });
+    }
+
     /**
      * Show success message when add is successful
      */
@@ -177,17 +196,5 @@ export class VillesRamassageComponent implements OnInit {
             {classname: 'bg-success text-center text-light', delay: 3000});
     }
 
-    /**
-     * Search ville de ramassage
-     * @param searchTerm
-     */
-    searchVilleRamassage(searchTerm: string) {
-        this.searchTerm = searchTerm;
-        this.getVillesRamassage(this.searchTerm);
-    }
 
-
-    changeItemsPerPage() {
-
-    }
 }

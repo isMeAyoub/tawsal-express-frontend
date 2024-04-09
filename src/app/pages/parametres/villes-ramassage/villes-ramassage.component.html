@@ -73,6 +73,12 @@
                                             </button>
                                         </div>
                                         <!-- TODO: add click event -->
+                                        <div>
+                                            <button class="btn btn-sm btn-warning "
+                                                    (click)="changeStatus(ville.villeId)">
+                                                Changer Status
+                                            </button>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -81,24 +87,29 @@
                     </div>
 
                     <div class="row justify-content-md-between align-items-md-center">
+
                         <div class="col col-sm-6">
                             <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
                                 <div class="d-flex align-items-center">
                                     <span class="page-data">Affichage de {{ villesRamassageData.length }}
-                                        sur {{ totalItems }}</span>
+                                        à {{ villesRamassageData.length }} sur {{ totalItems }} entrées</span>
                                 </div>
                             </div>
                         </div>
                         <!-- Pagination -->
-                        <div class="text-sm-right float-sm-end listjs-pagination">
-                            <ngb-pagination
-                                    [collectionSize]="totalItems"
-                                    [pageSize]="itemsPerPage"
-                                    [(page)]="currentPage"
-                                    [maxSize]="5"
-                                    [rotate]="true"
-                                    (pageChange)="getVillesRamassage(searchTerm)">
-                            </ngb-pagination>
+                        <div class="col col-sm-6">
+
+                            <!-- Pagination -->
+                            <div class="text-sm-right float-sm-end listjs-pagination">
+                                <ngb-pagination
+                                        [collectionSize]="totalItems"
+                                        [pageSize]="itemsPerPage"
+                                        [(page)]="currentPage"
+                                        [maxSize]="5"
+                                        [rotate]="true"
+                                        (pageChange)="getVillesRamassage(searchTerm)">
+                                </ngb-pagination>
+                            </div>
                         </div>
                     </div>
                 </div>

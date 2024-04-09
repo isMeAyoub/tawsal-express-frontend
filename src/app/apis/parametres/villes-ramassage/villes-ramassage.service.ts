@@ -25,7 +25,7 @@ export class VillesRamassageService {
      * @param size number
      * @param search string
      */
-    getVillesRamassage(page: number = 0, size: number = 10, search: string = ''): Observable<VilleRamassageResponse> {
+    getVillesRamassage(page: number, size: number , search: string = ''): Observable<VilleRamassageResponse> {
         return this.http.get<VilleRamassageResponse>(`${this.baseUrl}?page=${page}&size=${size}&search=${search}`);
     }
 
@@ -52,6 +52,14 @@ export class VillesRamassageService {
      */
     updateVilleRamassage(villeRamassage: VilleRamassage, id: number): Observable<VilleRamassage> {
         return this.http.put<VilleRamassage>(`${this.baseUrl}/${id}`, villeRamassage);
+    }
+
+    /**
+     * Activate or deactivate a ville ramassage
+     * @param id number
+     */
+    changeStatusOfVilleRamassage(id: number): Observable<any> {
+        return this.http.patch(`${this.baseUrl}/${id}/status`, {});
     }
 
 }
