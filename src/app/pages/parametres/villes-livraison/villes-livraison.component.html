@@ -1,1 +1,182 @@
-<p>villes-livraison works!</p>
+<app-breadcrumbs title="Villes de Livraison" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">
+                    Liste des villes de Livraison
+                </h4>
+            </div>
+
+            <!-- end card header -->
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <div class="col-sm-auto">
+                            <div>
+                                <button type="button" class="btn btn-success add-btn" (click)="openModal()">
+                                    <i class="ri-add-line align-bottom"></i> Ajouter
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Rechercher..."
+                                           (keyup)="searchVillesLivraison($any($event).target.value)">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <table class="table">
+                            <thead>
+                            <tr class="bg-light text-muted">
+                                <th></th>
+                                <th></th>
+                                <th>Reference</th>
+                                <th>Nom Ville</th>
+                                <th>La Région</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let ville of villesLivraisonData">
+                                <td></td>
+                                <td></td>
+                                <td>{{ ville.reference }}</td>
+                                <td>{{ ville.nomVille }}</td>
+                                <td>{{ ville.zone.nomZone }}</td>
+                                <td>
+                                    <span class="status badge text-uppercase"
+                                          [ngClass]="{'badge-soft-success': ville.isActive, 'badge-soft-warning':!ville.isActive}">
+                                            {{ ville.isActive ? 'Active' : 'Desactive' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <div class="edit">
+                                            <button class="btn btn-sm btn-success edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    (click)="openModal(ville)">
+                                                Modifier
+                                            </button>
+                                        </div>
+                                        <div class="remove">
+                                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteRecordModal"
+                                                    (click)="confirmDeleteVilleLivraison(ville.villeId)">
+                                                Supprimer
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-warning "
+                                                    (click)="changeStatusOfVilleLivraison(ville.villeId)">
+                                                Changer Status
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row justify-content-md-between align-items-md-center">
+
+                        <div class="col col-sm-6">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                <div class="d-flex align-items-center">
+                                    <span class="page-data">Affichage de {{ villesLivraisonData.length }}
+                                        à {{ villesLivraisonData.length }} sur {{ totalItems }} entrées</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pagination -->
+                        <div class="col col-sm-6">
+                            <div class="text-sm-right float-sm-end listjs-pagination">
+                                <ngb-pagination
+                                        [collectionSize]="totalItems"
+                                        [pageSize]="itemsPerPage"
+                                        [(page)]="currentPage"
+                                        [maxSize]="5"
+                                        [rotate]="true"
+                                        (pageChange)="getVillesLivraison(searchTerm)">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!-- Modal -->
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">
+            {{ villesLivraisonForm.get('id')?.value ? 'Modifier' : 'Ajouter' }} Ville de Livraison
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+                (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form (ngSubmit)="saveVilleLivraison()" [formGroup]="villesLivraisonForm" autocomplete="off">
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="reference-field" class="form-label">
+                    Référence
+                </label>
+                <input type="text" id="reference-field" class="form-control" placeholder="Entrer Référence" required
+                       formControlName="reference"
+                       [ngClass]="{ 'is-invalid': submitted && villesLivraisonForm.controls['reference'].errors }"/>
+                <div *ngIf="submitted && villesLivraisonForm.controls['reference'].errors" class="invalid-feedback"
+                     align="left">
+                    <div *ngIf="villesLivraisonForm.controls['reference'].errors['required']">
+                        Référence est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="nomVille-field" class="form-label">Nom Ville</label>
+                <input type="text" id="nomVille-field" class="form-control" placeholder="Entrer Nom Ville" required
+                       formControlName="nomVille"
+                       [ngClass]="{ 'is-invalid': submitted && villesLivraisonForm.controls['nomVille'].errors }"/>
+                <div *ngIf="submitted && villesLivraisonForm.controls['nomVille'].errors" class="invalid-feedback"
+                     align="left">
+                    <div *ngIf="villesLivraisonForm.controls['nomVille'].errors['required']">
+                        Nom Ville est obligatoire
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3" formGroupName="zone">
+                <label for="zone-field" class="form-label">Région</label>
+                <select id="zone-field" class="form-select" required formControlName="zoneId"
+                        [ngClass]="{ 'is-invalid': submitted && villesLivraisonForm.get('zone')?.errors }">
+                    <option [ngValue]="null" disabled>Selectionner la Région</option>
+                    <option *ngFor="let zone of zonesData" [ngValue]="zone.zoneId">{{ zone.nomZone }}</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                        (click)="modal.close('Close click')">
+                    Fermer
+                </button>
+                <button type="submit" class="btn btn-success" id="add-btn">
+                    {{ villesLivraisonForm.get('id')?.value ? 'Modifier' : 'Ajouter' }}
+                </button>
+            </div>
+        </div>
+    </form>
+</ng-template>
+<!-- Toasts -->
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

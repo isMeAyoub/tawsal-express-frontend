@@ -120,10 +120,11 @@
 </div>
 
 <!-- Modal -->
+<!-- Modal -->
 <ng-template #content role="document" let-modal>
     <div class="modal-header bg-light p-3">
         <h5 class="modal-title" id="exampleModalLabel">
-            {{ zonesForm.get('id')?.value ? 'Modifier' : 'Ajouter' }} Nouvelle Région
+            {{ zonesForm.get('id')?.value ? 'Modifier' : 'Ajouter' }} Région
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
                 (click)="modal.dismiss('Cross click')"></button>
@@ -131,9 +132,7 @@
     <form (ngSubmit)="submitForm()" [formGroup]="zonesForm" autocomplete="off">
         <div class="modal-body">
             <div class="mb-3">
-                <label for="nomZone-field" class="form-label">
-                    Nom Région
-                </label>
+                <label for="nomZone-field" class="form-label">Nom Région</label>
                 <input type="text" id="nomZone-field" class="form-control" placeholder="Entrer Nom Région" required
                        formControlName="nomZone"
                        [ngClass]="{ 'is-invalid': submitted && zonesForm.controls['nomZone'].errors }"/>
@@ -158,6 +157,5 @@
         </div>
     </form>
 </ng-template>
-
 <!-- Toasts -->
 <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
