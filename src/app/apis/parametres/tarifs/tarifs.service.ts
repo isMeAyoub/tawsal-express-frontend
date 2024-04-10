@@ -28,7 +28,7 @@ export class TarifsService {
     getTarifs(page: number, size: number, search: string = '', VilleRamassage: string = '', VilleLivraison: string = ''):
         Observable<any> {
         return this.http.get<any>(
-            `${this.baseUrl}?page=${page}&size=${size}&search=${search}&villeRamassage=${VilleRamassage}&villeLivraison=${VilleLivraison}`);
+            `${this.baseUrl}?page=${page}&size=${size}&search=${search}&VilleRamassage=${VilleRamassage}&VilleLivraison=${VilleLivraison}`);
     }
 
     /**

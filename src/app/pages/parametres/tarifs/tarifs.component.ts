@@ -69,7 +69,7 @@ export class TarifsComponent implements OnInit {
             prixLivraison: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
             prixRetour: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
             prixRefuse: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-            delaiLivraison: ['', Validators.required],
+            delaiLivraison: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
             villeLivraison: this.formBuilder.group({
                 villeId: ['', Validators.required]
             }),
@@ -122,17 +122,21 @@ export class TarifsComponent implements OnInit {
     }
 
     /**
-     * Search tarif
-     * @param searchTerm
-     * @param searchVilleRamassage
-     * @param searchVilleLivraison
+     * Search tarif by filter value
+     * @param filterValue
+     * @param filterType
      */
-    searchTarif(searchTerm: string, searchVilleRamassage: string, searchVilleLivraison: string) {
-        this.searchTerm = searchTerm;
-        this.searchVilleRamassage = searchVilleRamassage;
-        this.searchVilleLivraison = searchVilleLivraison;
+    searchTarif(filterValue: string, filterType: 'ramassage' | 'livraison' | 'search') {
+        if (filterType === 'ramassage') {
+            this.searchVilleRamassage = filterValue;
+        } else if (filterType === 'livraison') {
+            this.searchVilleLivraison = filterValue;
+        } else if (filterType === 'search') {
+            this.searchTerm = filterValue;
+        }
         this.getTarifs(this.searchTerm, this.searchVilleRamassage, this.searchVilleLivraison);
     }
+
 
     /**
      * Open modal to add or update tarif
@@ -246,5 +250,28 @@ export class TarifsComponent implements OnInit {
     ShowSuccessUpdate() {
         this.toastService.show('Tarif modifié avec succès',
             {classname: 'bg-success text-center text-light', delay: 5000});
+    }
+
+    /**
+     * Reset filters to their default values
+     */
+    resetFilters() {
+        // Reset the filters to their default values
+        this.searchTarif('', 'ramassage');
+        this.searchTarif('', 'livraison');
+        this.searchTarif('', 'search');
+    }
+
+    /**
+     * Get For Pagination
+     */
+    getTarifsPagination() {
+
+        const backendPage = this.currentPage - 1;
+        this.tarifsService.getTarifs(backendPage, this.itemsPerPage, this.searchTerm, this.searchVilleRamassage, this.searchVilleLivraison)
+            .subscribe((data) => {
+                this.tarifsData = data.content;
+                this.totalItems = data.totalElements;
+            });
     }
 }

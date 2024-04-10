@@ -32,6 +32,7 @@ import { VillesRamassageComponent } from './parametres/villes-ramassage/villes-r
 import { ZonesComponent } from './parametres/zones/zones.component';
 import { TarifsComponent } from './parametres/tarifs/tarifs.component';
 import {ToastsContainer} from "../shared/toast/toasts-container.component";
+import { ReclamationsComponent } from './reclamations/reclamations.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -46,7 +47,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     VillesRamassageComponent,
     ZonesComponent,
     TarifsComponent,
-    ToastsContainer
+    ToastsContainer,
+    ReclamationsComponent,
   ],
   imports: [
     CommonModule,
