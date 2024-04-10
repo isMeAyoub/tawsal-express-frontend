@@ -1,1 +1,221 @@
-<p>tarifs works!</p>
+<app-breadcrumbs title="Tarifs"
+                 [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">
+                    Liste des Tarifs de livraison
+                </h4>
+            </div>
+
+            <!-- end card header -->
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <div class="col-sm-auto">
+                            <div>
+                                <button type="button" class="btn btn-success add-btn" (click)="openModal()">
+                                    <i class="ri-add-line align-bottom"></i> Ajouter
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Rechercher...">
+                                    <!--                                           (keyup)="searchVilleRamassage($any($event).target.value)"-->
+
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <table class="table">
+                            <thead>
+                            <tr class="bg-light text-muted">
+                                <th>#</th>
+                                <th>Prix Livraison</th>
+                                <th>Prix Retour</th>
+                                <th>Prix Refuse</th>
+                                <th>Delaie Livraison</th>
+                                <th>Ville de Ramassage</th>
+                                <th>Ville de Livraison</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let tarif of tarifsData">
+                                <td>{{ tarif.tarifId }}</td>
+                                <td>{{ tarif.prixLivraison }} {{ generalData?.monnaieApplication }}</td>
+                                <td>{{ tarif.prixRetour }} {{ generalData?.monnaieApplication }}</td>
+                                <td>{{ tarif.prixRefuse }} {{ generalData?.monnaieApplication }}</td>
+                                <td>{{ tarif.delaiLivraison }}J </td>
+                                <td>{{ tarif.villeRamassage.nomVille }}</td>
+                                <td>{{ tarif.villeLivraison.nomVille }}</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <div class="edit">
+                                            <button class="btn btn-sm btn-success edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    (click)="openModal(tarif)">
+                                                Modifier
+                                            </button>
+                                        </div>
+                                        <div class="remove">
+                                            <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteRecordModal"
+                                                    (click)="confirmDelete(tarif.tarifId)">
+                                                Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row justify-content-md-between align-items-md-center">
+
+                        <div class="col col-sm-6">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                <div class="d-flex align-items-center">
+                                    <span class="page-data">Affichage de {{ villesRamassageData.length }}
+                                        à {{ villesRamassageData.length }} sur {{ totalItems }} entrées</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pagination -->
+                        <div class="col col-sm-6">
+                            <div class="text-sm-right float-sm-end listjs-pagination">
+                                <ngb-pagination
+                                        [collectionSize]="totalItems"
+                                        [pageSize]="itemsPerPage"
+                                        [(page)]="currentPage"
+                                        [maxSize]="5"
+                                        [rotate]="true">
+                                    <!--                                        (pageChange)="getVillesRamassage(searchTerm)"-->
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">
+            {{ tarifsForm.get('id')?.value ? 'Modifier' : 'Ajouter' }} Nouveau Tarif
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+                (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form (ngSubmit)="saveTarif()" [formGroup]="tarifsForm" autocomplete="off">
+        <div class="modal-body">
+            <div class="mb-3" formGroupName="villeRamassage">
+                <label for="villeRamassage-field" class="form-label">Ville de Ramassage</label>
+                <select id="villeRamassage-field" class="form-select" required
+                        formControlName="villeId"
+                        [ngClass]="{ 'is-invalid': submitted && tarifsForm.get('villeRamassage')?.errors }">
+                    <option [ngValue]="null" disabled>Selectionner une ville de ramassage</option>
+                    <option *ngFor="let ville of villesRamassageData" [value]="ville.villeId">{{ ville.nomVille }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3" formGroupName="villeLivraison">
+                <label for="villeLivraison-field" class="form-label">Ville de Livraison</label>
+                <select id="villeLivraison-field" class="form-select" required
+                        formControlName="villeId"
+                        [ngClass]="{ 'is-invalid': submitted && tarifsForm.get('villeLivraison')?.errors }">
+                    <option [ngValue]="null" disabled>Selectionner une ville de livraison</option>
+                    <option *ngFor="let ville of villesLivraisonData" [value]="ville.villeId">{{ ville.nomVille }}
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="prixLivraison-field" class="form-label">
+                    Prix Livraison En ({{ generalData?.monnaieApplication }})
+                </label>
+                <input type="number" id="prixLivraison-field" class="form-control" placeholder="Entrer Prix Livraison"
+                       required
+                       formControlName="prixLivraison"
+                       [ngClass]="{ 'is-invalid': submitted && tarifsForm.controls['prixLivraison'].errors }"/>
+                <div *ngIf="submitted && tarifsForm.controls['prixLivraison'].errors" class="invalid-feedback"
+                     align="left">
+                    <div *ngIf="tarifsForm.controls['prixLivraison'].errors['required']">
+                        Prix Livraison est obligatoire, Entrez un nombre valide !
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="prixRetour-field" class="form-label">
+                    Prix Retour En ({{ generalData?.monnaieApplication }})
+                </label>
+                <input type="number" id="prixRetour-field" class="form-control" placeholder="Entrer Prix Retour"
+                       required
+                       formControlName="prixRetour"
+                       [ngClass]="{ 'is-invalid': submitted && tarifsForm.controls['prixRetour'].errors }"/>
+                <div *ngIf="submitted && tarifsForm.controls['prixRetour'].errors" class="invalid-feedback"
+                     align="left">
+                    <div *ngIf="tarifsForm.controls['prixRetour'].errors['required']">
+                        Prix Retour est obligatoire, Entrez un nombre valide !
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="prixRefuse-field" class="form-label">
+                    Prix Refuse En ({{ generalData?.monnaieApplication }})
+                </label>
+                <input type="number" id="prixRefuse-field" class="form-control" placeholder="Entrer Prix Refuse"
+                       required
+                       formControlName="prixRefuse"
+                       [ngClass]="{ 'is-invalid': submitted && tarifsForm.controls['prixRefuse'].errors }"/>
+                <div *ngIf="submitted && tarifsForm.controls['prixRefuse'].errors" class="invalid-feedback"
+                     align="left">
+                    <div *ngIf="tarifsForm.controls['prixRefuse'].errors['required']">
+                        Prix Refuse est obligatoire, Entrez un nombre valide !
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="delaiLivraison-field" class="form-label">
+                    Delai Livraison En (Jours)
+                </label>
+                <input type="number" id="delaiLivraison-field" class="form-control" placeholder="Entrer Delai Livraison"
+                       required
+                       formControlName="delaiLivraison"
+                       [ngClass]="{ 'is-invalid': submitted && tarifsForm.controls['delaiLivraison'].errors }"/>
+                <div *ngIf="submitted && tarifsForm.controls['delaiLivraison'].errors" class="invalid-feedback"
+                     align="left">
+                    <div *ngIf="tarifsForm.controls['delaiLivraison'].errors['required']">
+                        Delai Livraison est obligatoire, Entrez un nombre valide !
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                        (click)="modal.close('Close click')">
+                    Fermer
+                </button>
+                <button type="submit" class="btn btn-success" id="add-btn">
+                    {{ tarifsForm.get('id')?.value ? 'Modifier' : 'Ajouter' }}
+                </button>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<!-- Toasts -->
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>

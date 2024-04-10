@@ -192,10 +192,7 @@ export class VillesLivraisonComponent implements OnInit {
      * Delete a ville de livraison
      * @param villeId
      */
-    deleteVilleLivraison(villeId
-                             :
-                             number
-    ) {
+    deleteVilleLivraison(villeId: number) {
         this.villesLivraisonService.deleteVilleLivraison(villeId).subscribe((response) => {
             this.getVillesLivraison();
         });
@@ -205,10 +202,7 @@ export class VillesLivraisonComponent implements OnInit {
      * Change the status of a ville de livraison
      * @param villeId
      */
-    changeStatusOfVilleLivraison(villeId
-                                     :
-                                     number
-    ) {
+    changeStatusOfVilleLivraison(villeId: number) {
         this.villesLivraisonService.changeStatusOfVilleLivraison(villeId).subscribe((response) => {
             this.getVillesLivraison();
         });

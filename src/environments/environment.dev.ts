@@ -1,3 +1,4 @@
 export const environment = {
-    apiUrl: 'http://localhost:8089/',
+    // TODO: make sure to change this to the gateway url
+    apiUrl: 'http://localhost:8086/',
 }
