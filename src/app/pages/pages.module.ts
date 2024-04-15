@@ -33,6 +33,7 @@ import { ZonesComponent } from './parametres/zones/zones.component';
 import { TarifsComponent } from './parametres/tarifs/tarifs.component';
 import {ToastsContainer} from "../shared/toast/toasts-container.component";
 import { ReclamationsComponent } from './reclamations/reclamations.component';
+import { TestComponent } from './test/test.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -49,6 +50,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TarifsComponent,
     ToastsContainer,
     ReclamationsComponent,
+    TestComponent,
   ],
   imports: [
     CommonModule,

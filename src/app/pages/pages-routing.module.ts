@@ -8,6 +8,7 @@ import {VillesLivraisonComponent} from "./parametres/villes-livraison/villes-liv
 import {VillesRamassageComponent} from "./parametres/villes-ramassage/villes-ramassage.component";
 import {ZonesComponent} from "./parametres/zones/zones.component";
 import {TarifsComponent} from "./parametres/tarifs/tarifs.component";
+import {ReclamationsComponent} from "./reclamations/reclamations.component";
 
 const routes: Routes = [
     {
@@ -33,6 +34,10 @@ const routes: Routes = [
     {
         path: "parametres/tarifs",
         component: TarifsComponent
+    },
+    {
+        path: "reclamations",
+        component: ReclamationsComponent
     }
 ];
 
