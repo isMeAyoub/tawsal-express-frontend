@@ -25,7 +25,9 @@
                         <div class="col">
                             <select class="form-select" (change)="searchTarif($any($event.target).value, 'ramassage')">
                                 <option value="">Toutes les villes de ramassage</option>
-                                <option *ngFor="let ville of villesRamassageData" [value]="ville.nomVille">{{ ville.nomVille }}</option>
+                                <option *ngFor="let ville of villesRamassageData"
+                                        [value]="ville.nomVille">{{ ville.nomVille }}
+                                </option>
                             </select>
                         </div>
 
@@ -33,18 +35,22 @@
                         <div class="col">
                             <select class="form-select" (change)="searchTarif($any($event.target).value, 'livraison')">
                                 <option value="">Toutes les villes de livraison</option>
-                                <option *ngFor="let ville of villesLivraisonData" [value]="ville.nomVille">{{ ville.nomVille }}</option>
+                                <option *ngFor="let ville of villesLivraisonData"
+                                        [value]="ville.nomVille">{{ ville.nomVille }}
+                                </option>
                             </select>
                         </div>
 
                         <!-- Search Input -->
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Rechercher..." (keyup)="searchTarif($any($event.target).value, 'search')">
+                            <input type="text" class="form-control" placeholder="Rechercher..."
+                                   (keyup)="searchTarif($any($event.target).value, 'search')">
                         </div>
 
                         <!-- Reset Button -->
                         <div class="col-sm-auto">
-                            <button type="button" class="btn btn-secondary" (click)="resetFilters()" title="Refréchir filtres">
+                            <button type="button" class="btn btn-secondary" (click)="resetFilters()"
+                                    title="Refréchir filtres">
                                 <i class="ri-refresh-line"></i>
                             </button>
                         </div>
@@ -54,24 +60,24 @@
                             <thead>
                             <tr class="bg-light text-muted">
                                 <th>#</th>
+                                <th>Ville de Ramassage</th>
+                                <th>Ville de Livraison</th>
                                 <th>Prix Livraison</th>
                                 <th>Prix Retour</th>
                                 <th>Prix Refuse</th>
                                 <th>Delaie Livraison</th>
-                                <th>Ville de Ramassage</th>
-                                <th>Ville de Livraison</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let tarif of tarifsData">
                                 <td>{{ tarif.tarifId }}</td>
+                                <td>{{ tarif.villeRamassage.nomVille }}</td>
+                                <td>{{ tarif.villeLivraison.nomVille }}</td>
                                 <td>{{ tarif.prixLivraison }} {{ generalData?.monnaieApplication }}</td>
                                 <td>{{ tarif.prixRetour }} {{ generalData?.monnaieApplication }}</td>
                                 <td>{{ tarif.prixRefuse }} {{ generalData?.monnaieApplication }}</td>
                                 <td>{{ tarif.delaiLivraison }}J</td>
-                                <td>{{ tarif.villeRamassage.nomVille }}</td>
-                                <td>{{ tarif.villeLivraison.nomVille }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <div class="edit">
@@ -144,9 +150,12 @@
                                 formControlName="villeId"
                                 [class.is-invalid]="submitted && tarifsForm.get('villeRamassage.villeId')?.invalid">
                             <option [ngValue]="null" disabled>Selectionner une ville de ramassage</option>
-                            <option *ngFor="let ville of villesRamassageData" [ngValue]="ville.villeId">{{ ville.nomVille }}</option>
+                            <option *ngFor="let ville of villesRamassageData"
+                                    [ngValue]="ville.villeId">{{ ville.nomVille }}
+                            </option>
                         </select>
-                        <div *ngIf="submitted && tarifsForm.get('villeRamassage.villeId')?.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && tarifsForm.get('villeRamassage.villeId')?.errors"
+                             class="invalid-feedback">
                             Ville de Ramassage est obligatoire.
                         </div>
                     </div>
@@ -160,9 +169,12 @@
                                 formControlName="villeId"
                                 [class.is-invalid]="submitted && tarifsForm.get('villeLivraison.villeId')?.invalid">
                             <option [ngValue]="null" disabled>Selectionner une ville de livraison</option>
-                            <option *ngFor="let ville of villesLivraisonData" [ngValue]="ville.villeId">{{ ville.nomVille }}</option>
+                            <option *ngFor="let ville of villesLivraisonData"
+                                    [ngValue]="ville.villeId">{{ ville.nomVille }}
+                            </option>
                         </select>
-                        <div *ngIf="submitted && tarifsForm.get('villeLivraison.villeId')?.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && tarifsForm.get('villeLivraison.villeId')?.errors"
+                             class="invalid-feedback">
                             Ville de Livraison est obligatoire.
                         </div>
                     </div>
